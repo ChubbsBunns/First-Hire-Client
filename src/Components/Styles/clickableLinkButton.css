@@ -1,0 +1,23 @@
+.clickable-link-button {
+    display: flex;
+
+    border: none;
+    border-radius: 8px;
+    background-color: #e0e0e0; /* Adjust background color as needed */
+    color: #000; /* Adjust text color as needed */
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    max-height: 70%;
+    margin: 1vh;
+    overflow: hidden;
+  }
+  
+  .clickable-link-button:hover {
+    background-color: #0c4551; 
+    color: white;
+
+  }
