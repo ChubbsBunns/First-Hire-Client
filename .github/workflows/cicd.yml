@@ -13,7 +13,7 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}     
       - name: Build Docker Image
-        run: docker build -t chubbsbunns/first-hire-frontend  --build-arg VITE_WEB_BASE_URL='http://122.248.194.104:5173' --build-arg VITE_API_BASE_URL='http://122.248.194.104:3001' --build-arg VITE_AUTH_DOMAIN_URL='dev-dwtvfqfln7z0evht.us.auth0.com'
+        run: docker build -t chubbsbunns/first-hire-frontend --build-arg VITE_WEB_BASE_URL='http://122.248.194.104:5173' --build-arg VITE_API_BASE_URL='http://122.248.194.104:3001' --build-arg VITE_AUTH_DOMAIN_URL='dev-dwtvfqfln7z0evht.us.auth0.com' .
       - name: Publish Image to docker hub
         run: docker push chubbsbunns/first-hire-frontend:latest
  
