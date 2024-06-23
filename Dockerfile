@@ -12,5 +12,5 @@ FROM nginx:1.23-alpine
 WORKDIR /use/share/nginx/html
 RUN rm -rf *
 COPY --from=build /app/build .
-EXPOSE 80
+EXPOSE 5173
 ENTRYPOINT [ "nginx", "-g", "daemon: off;" ]
