@@ -12,16 +12,16 @@ ENV VITE_AUTH_DOMAIN_URL=$VITE_AUTH_DOMAIN_URL
 
 #Build App
 WORKDIR /app
-COPY package.json .
+COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
 #
 FROM nginx:1.23-alpine
-COPY /nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /use/share/nginx/html
 RUN rm -rf *
-COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
