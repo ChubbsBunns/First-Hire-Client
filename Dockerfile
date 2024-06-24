@@ -22,6 +22,6 @@ FROM nginx:1.23-alpine
 COPY /nginx/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /use/share/nginx/html
 RUN rm -rf *
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist .
 EXPOSE 80
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
