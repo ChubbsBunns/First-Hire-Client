@@ -8,10 +8,14 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import LoginIcon from '@mui/icons-material/Login';
 import LoginButton from '../LoginButton';
+import Login from '../Login'
+
+import { buttonStyles } from '../Styles/BarButtonStyle';
+import { useNavigate } from "react-router-dom";
 
 function LandingPageHeader(props) {
   const { sections, title } = props;
-
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: "#0c4551" }}>
@@ -26,6 +30,9 @@ function LandingPageHeader(props) {
         >
           {title}
         </Typography>
+
+        <Button onClick={() => navigate("/login")} sx={buttonStyles}>New Login</Button>
+        <Button onClick={() => navigate("/register")} sx={buttonStyles}>Register</Button>
         <IconButton>
           <LoginIcon sx={{color:"white"}}/>
         </IconButton>
@@ -51,7 +58,6 @@ function LandingPageHeader(props) {
               const targetSection = document.getElementById(section.url.slice(1));
               console.log("In the event log")
               if (targetSection) {
-                console.log("I am a chicken nugget")
                 targetSection.scrollIntoView({ behavior: 'smooth' });
               }
             }}
