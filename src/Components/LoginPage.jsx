@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,8 +11,19 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { AuthContext } from "./AuthContext";
+
+import { useNavigate } from "react-router-dom";
+
 import axios from 'axios';
+
+import registerImage from '../assets/registerFirstHireImage.jpg'
+import registerImage2 from '../assets/registerImage2.jpg'
+import registerImage3 from '../assets/registerImge3.png'
+import registerImage4 from '../assets/registerImage4.jpg'
+
 function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -25,8 +36,12 @@ function Copyright(props) {
       </Typography>
     );
   }
+
 function LoginPage() {
+    const navigate = useNavigate();
+
     const [message, setMessage] = useState("");
+    const { setToken } = useContext(AuthContext);
     const defaultTheme = createTheme();
 
     const handleSubmit = async (event) => {
@@ -38,7 +53,11 @@ function LoginPage() {
                 email: data.get('email'),
                 password: data.get('password'),
             })
+            setToken(response.data.token)
+            localStorage.setItem("token", response.data.token)
             console.log("Able to post the data")
+            console.log("The token has been set in the frontend to " + response.data.token)
+            navigate("/checkUserSettings")
         } catch (error) {
             console.error(error);
             setMessage(error.response.data.error);
@@ -56,7 +75,7 @@ function LoginPage() {
             md={7}
             sx={{
               backgroundImage:
-                'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+                `url(${registerImage})`,
               backgroundColor: (t) =>
                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
               backgroundSize: 'cover',

@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     console.log("I am reading inside authcontext")
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
+    console.log("The token has been set to " + storedToken)
     setLoading(false); 
   }, []);
 

@@ -13,6 +13,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+import registerImage from '../assets/registerFirstHireImage.jpg'
+import registerImage2 from '../assets/registerImage2.jpg'
+import registerImage3 from '../assets/registerImge3.png'
+
 function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,31 +32,20 @@ function Copyright(props) {
     );
   }
 function RegistrationPage() {
+    const navigate = useNavigate();
     const [message, setMessage] = useState("");
     const defaultTheme = createTheme();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Start1")
-        console.log(event.currentTarget)
-        console.log("Start2")
         const data = new FormData(event.currentTarget);
-/*         console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
-        console.log("Start3") */
         try {
-          var options = {
-            method: 'POST',
-            url: `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`
-          }
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
                 email: data.get('email'),
                 password: data.get('password'),
             })
+            navigate("/login")
             console.log("Able to post the data")
-
         } catch (error) {
             console.error(error);
             setMessage(error.response.data.error);
@@ -68,7 +63,7 @@ function RegistrationPage() {
             md={7}
             sx={{
               backgroundImage:
-                'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+                `url(${registerImage3})`,
               backgroundColor: (t) =>
                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
               backgroundSize: 'cover',
