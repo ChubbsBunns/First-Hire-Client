@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import { buttonStyles } from './Styles/BarButtonStyle';
+import { buttonStyles } from '../Styles/BarButtonStyle';
 import Card from '@mui/material/Card';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Container } from "@mui/material";
@@ -14,7 +14,7 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { useNavigate } from 'react-router-dom';
 
 import LogoutButton from './LogoutButton';
-import firstHireSecondaryLogo from '../assets/firstHireLogoSecondary.png'
+import firstHireSecondaryLogo from '../../assets/firstHireLogoSecondary.png'
 
 function AppNavBar() {
     const navigate = useNavigate();

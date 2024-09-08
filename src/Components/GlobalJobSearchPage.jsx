@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ResponsiveAppBar from "./AppBar"
+import React, { useEffect, useState, useContext } from "react";
+import ResponsiveAppBar from "./Elements/AppBar"
 import Box from '@mui/material/Box';
 import { Container } from "@mui/material";
 import { TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import AppNavBar from "./Header";
+import AppNavBar from "./Elements/Header";
 import { buttonStyles } from "./Styles/BarButtonStyle";
 
 import Table from '@mui/material/Table';
@@ -21,12 +21,13 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 import axios from "axios";
 
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { AuthContext } from './AuthContext';
 
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "./LoadingPage";
 
 function GlobalJobSearchPage() {
-
+    const { token, loading, email } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const columns = [
@@ -44,25 +45,12 @@ function GlobalJobSearchPage() {
             const [jobData , setJobData] = useState([]);
             const [filteredData, setFilteredData] = useState([]);
 
-            const {
-                isLoading,
-                isAuthenticated,
-                error,
-                user,
-                getAccessTokenSilently,
-              } = useAuth0();
-
             async function getLatestJobSearchQueryDate() {
-                const accessToken = await getAccessTokenSilently({
-                    authorizationParams: {
-                      audience: `https://${import.meta.env.VITE_AUTH_DOMAIN_URL}/api/v2/`,
-                    },
-                  });
                 var options = {
                 method: 'GET',
                     url: `${import.meta.env.VITE_API_BASE_URL}/getLatestJobSearchQueryDate`,
-                headers: {authorization: `Bearer ${accessToken}`,
-                audience: `https://first-hire-api.com`}
+/*                 headers: {authorization: `Bearer ${accessToken}`,
+                audience: `https://first-hire-api.com`} */
                 };
         
                 const latestDate = await axios.request(options);
@@ -71,39 +59,26 @@ function GlobalJobSearchPage() {
         
 
             async function getJobData() {
-                if (isAuthenticated) {
-                    try {
-                        const accessToken = await getAccessTokenSilently({
-                            authorizationParams: {
-                              audience: `https://${import.meta.env.VITE_AUTH_DOMAIN_URL}/api/v2/`,
-                            },
-                          });
-                          var options = {
-                            method: 'GET',
-                                url: `${import.meta.env.VITE_API_BASE_URL}/getAllCurrentJobData`,
-                            headers: {authorization: `Bearer ${accessToken}`,
-                            audience: `https://first-hire-api.com`}
-                            };
-                            const jobData = await axios.request(options);
-                            return jobData.data.jobDataList;
-                    } catch(err) {
-                        console.err(err);
-                    }
-                } else {
-                    const accessToken = await getAccessTokenSilently({
-                        authorizationParams: {
-                          audience: `https://${import.meta.env.VITE_AUTH_DOMAIN_URL}/api/v2/`,
-                        },
-                      });
-                      var options = {
+                try {
+                        let options = {
                         method: 'GET',
                             url: `${import.meta.env.VITE_API_BASE_URL}/getAllCurrentJobData`,
-                        headers: {authorization: `Bearer ${accessToken}`,
-                        audience: `https://first-hire-api.com`}
                         };
-                        const jobData = await axios.request(options);
-                        return jobData.data.jobDataList;
+                        try {
+                            let jobData = await axios.request(options);
+                            return jobData.data.jobDataList;
+                        } catch(err) {
+                            if (err.response.data == "The Job Data object is empty") {
+                                navigate("/jobSearchParameters")
+                            } else {
+                                throw Error(err);
+                            }
+                        }
+                        
+                } catch(err) {
+                    console.log(err);
                 }
+                
             }
 
             const filterData = (data, searchTerm) => {
@@ -124,10 +99,6 @@ function GlobalJobSearchPage() {
             useEffect(() => {
                 const assureAuthenticationAndGetData = async () => {
                     try {
-                        const accessToken = await getAccessTokenSilently({
-                            audience: `https://${import.meta.env.VITE_AUTH_DOMAIN_URL}/api/v2/`,
-                            scope: "read:current_user",
-                        });
                         const jobData = await getJobData();
                         const latestDate = await getLatestJobSearchQueryDate();
                         setJobData(jobData)
@@ -139,50 +110,59 @@ function GlobalJobSearchPage() {
                         navigate("/")
                     }
                 }
-                if (isLoading == false) {
-                    assureAuthenticationAndGetData();
-                }
-            }, [isLoading])
+                
+                assureAuthenticationAndGetData();
+                
+            }, [])
 
             useEffect(() => {
                 const filteredData = filterData(jobData, searchTerm);
                 setFilteredData(filteredData)
             }, [searchTerm])
 
-            if (isLoading) {
-                return <div>Loading ...</div>;
-              }
+            
+            
+    if (loading) {
+        console.log("Loading")
+        return <LoadingPage/>
+    }
+    else {
+        if (token) {
+            return <Box id="root">
+            <Box id="page-header-head" style={{fontFamily: "open sans,helvetica,arial,sans-serif",  zIndex: 0, background:"#d3d3d3", minHeight: "100vh", position: "relative"}}>
+                <Container id="page-header" sx={{  backgroundColor: "#/* c1d5e3 */", color: "white", width: "100%", margin: "0", minWidth:"100%", maxHeight: "30vh", boxShadow: 1}}>
+                    <AppNavBar/>
+                </Container>
+                <Container id ="hero-background" sx={{ backgroundColor: "#0c4551", width: "100%", top: "0", height: "380px", minWidth:"100%", zIndex: -1, position: "absolute", boxShadow: 1}}></Container>
+                <Container id="jobs-container" sx={{maxWidth: "1140px", marginLeft: "auto", marginRight: "auto", pl: "15px", pr: "15px"}}>
+                    <Box id="jobs-container-header" sx={{marginTop: "40px"}}>
+                        <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Search All Companies &nbsp;<SearchIcon fontSize="large"/></Box>
+                        <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>Here are the jobs today that match your parameters</Box>
+                        <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>These jobs were last updated on {latestJobDate}</Box>
+                    </Box>
+                    <Card sx={{ minHeight: "500px",boxShadow: "2", borderRadius: "20px", p: "10px", backgroundColor: "#f9f9f9", mt: "15px", display: "flex", alignItems: "center", flexDirection: "column"}}>
+                        <Box sx={{flexDirection: "row", mb: "2vh", alignContent: "center", width: "30vw" }}>
+                            <TextField  sx={{ color: "black",  backgroundColor: "white",  width: "100%", }} id="outlined-basic" label="Search your filtered jobs by job title or company" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)}/>
+                        </Box>
+                        <Box sx={{display: "flex",  justifyContent: "center", flexDirection: "column"}}>
+                        <div style={{ height: "55vh",  width: "60vw" }}>
+                            <DataGrid sx={{ ".MuiTablePagination-selectLabel": {"marginTop": "1em", "marginBottom": "1em"}, 
+                                            ".MuiTablePagination-displayedRows": {"marginTop": "1em", "marginBottom": "1em"}}}
+                            rows={filteredData}
+                            columns={columns}
+                            />
+                        </div>
+                        </Box>
+                    </Card>
+                    </Container>
+            </ Box> 
+            </ Box>
+        } else {
+            console.log("Token not found")
+            navigate("/")
+        }
+    }
 
-
-    return <Box id="root">
-    <Box id="page-header-head" style={{fontFamily: "open sans,helvetica,arial,sans-serif",  zIndex: 0, background:"#d3d3d3", minHeight: "100vh", position: "relative"}}>
-        <Container id="page-header" sx={{  backgroundColor: "#/* c1d5e3 */", color: "white", width: "100%", margin: "0", minWidth:"100%", maxHeight: "30vh", boxShadow: 1}}>
-            <AppNavBar/>
-        </Container>
-        <Container id ="hero-background" sx={{ backgroundColor: "#0c4551", width: "100%", top: "0", height: "380px", minWidth:"100%", zIndex: -1, position: "absolute", boxShadow: 1}}></Container>
-        <Container id="jobs-container" sx={{maxWidth: "1140px", marginLeft: "auto", marginRight: "auto", pl: "15px", pr: "15px"}}>
-            <Box id="jobs-container-header" sx={{marginTop: "40px"}}>
-                <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Search All Companies &nbsp;<SearchIcon fontSize="large"/></Box>
-                <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>Here are the jobs today that match your parameters</Box>
-                <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>These jobs were last updated on {latestJobDate}</Box>
-            </Box>
-            <Card sx={{ minHeight: "500px",boxShadow: "2", borderRadius: "20px", p: "10px", backgroundColor: "#f9f9f9", mt: "15px", display: "flex", alignItems: "center", flexDirection: "column"}}>
-                <Box sx={{flexDirection: "row", mb: "2vh", alignContent: "center", width: "30vw" }}>
-                    <TextField  sx={{ color: "black",  backgroundColor: "white",  width: "100%", }} id="outlined-basic" label="Search your filtered jobs by job title or company" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)}/>
-                </Box>
-                <Box sx={{display: "flex",  justifyContent: "center", flexDirection: "column"}}>
-                <div style={{ height: "55vh",  width: "60vw" }}>
-                    <DataGrid sx={{ ".MuiTablePagination-selectLabel": {"marginTop": "1em", "marginBottom": "1em"}, 
-                                    ".MuiTablePagination-displayedRows": {"marginTop": "1em", "marginBottom": "1em"}}}
-                    rows={filteredData}
-                    columns={columns}
-                    />
-                </div>
-                </Box>
-            </Card>
-            </Container>
-    </ Box> 
-    </ Box>
 }
 
 export default GlobalJobSearchPage;

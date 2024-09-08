@@ -20,15 +20,12 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import registerImage from '../assets/registerFirstHireImage.jpg'
-import registerImage2 from '../assets/registerImage2.jpg'
-import registerImage3 from '../assets/registerImge3.png'
-import registerImage4 from '../assets/registerImage4.jpg'
 
 function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
-        <Link color="inherit" href="https://mypersonalwebsitewillbeheresoon">
+        <Link color="inherit" href="https://tinyurl.com/dylanhoshujie">
             firsthireofficial@gmail.com
         </Link>{' '}
         {new Date().getFullYear()}
@@ -41,12 +38,12 @@ function LoginPage() {
     const navigate = useNavigate();
 
     const [message, setMessage] = useState("");
-    const { setToken } = useContext(AuthContext);
+    const { setToken, setEmail } = useContext(AuthContext);
+    
     const defaultTheme = createTheme();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(event.currentTarget)
         const data = new FormData(event.currentTarget);
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
@@ -54,13 +51,12 @@ function LoginPage() {
                 password: data.get('password'),
             })
             setToken(response.data.token)
-            localStorage.setItem("token", response.data.token)
-            console.log("Able to post the data")
-            console.log("The token has been set in the frontend to " + response.data.token)
+            setEmail(response.data.email)            
             navigate("/checkUserSettings")
         } catch (error) {
+          console.log(error.response.data)
             console.error(error);
-            setMessage(error.response.data.error);
+            setMessage(error.response.data);
         }
         
       };

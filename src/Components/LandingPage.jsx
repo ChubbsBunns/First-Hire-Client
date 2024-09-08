@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Box from '@mui/material/Box';
 
 import Container from '@mui/material/Container';
@@ -19,8 +19,13 @@ import rowlet from '../assets/rowlet.png'
 import dotenv from 'dotenv';
 
 import searchParamWebPage from '../../src/assets/firstHireSearchParameterScreenshot.png';
-function LandingPage() {
 
+
+function LandingPage() {
+    useEffect(() => {
+      localStorage.removeItem('token')
+      localStorage.removeItem('email')
+    }, [])
     const mainFeaturedPost = {
         title: 'Be The First To Apply To Your Dream Job',
         description:
@@ -187,7 +192,7 @@ function LandingPage() {
                       <Box><strong>Basic Rundown:</strong></Box>
                       <Box>Frontend: ReactJS + MUI</Box>
                       <Box>Backend: NodeJS + Express</Box>
-                      <Box>Auth/ Identity Manager: Auth0</Box>
+                      <Box>Auth/ Identity Manager: BCrypt + Self Managed</Box>
                       <Box>Database: MongoDB</Box>
                       <Box>Other Services: AWS SES (Emailing capabilities), Selenium (Scrapping capabilities), node-cron (Scheduling) </Box>
                     </Box>
@@ -215,7 +220,7 @@ function LandingPage() {
                     <Box>
                       <h1>Hello! I'm Dylan</h1>
                       <Box>I'm an aspiring Web Developer, and developed this tool to help anyone fighting for jobs in this brutal world out there :)</Box>
-                      <Box>If you'd like to see more of what I have done, feel free to see my personal portfolio website <strong><Link href="/comingSoon">here</Link></strong></Box>
+                      <Box>If you'd like to see more of what I have done, feel free to see my personal portfolio website <strong><Link href="https://tinyurl.com/dylanhoshujie">here</Link></strong></Box>
                     </Box>
 
                     <Box id="test">

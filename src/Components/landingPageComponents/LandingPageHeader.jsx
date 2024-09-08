@@ -7,11 +7,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import LoginIcon from '@mui/icons-material/Login';
-import LoginButton from '../LoginButton';
-import Login from '../Login'
+import LoginButton from '../Elements/LoginButton';
+
+import { Box } from '@mui/material';
+
+import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
 
 import { buttonStyles } from '../Styles/BarButtonStyle';
 import { useNavigate } from "react-router-dom";
+import RegisterButton from '../Elements/RegisterButton';
 
 function LandingPageHeader(props) {
   const { sections, title } = props;
@@ -30,13 +34,24 @@ function LandingPageHeader(props) {
         >
           {title}
         </Typography>
+{/*         <Button onClick={() => navigate("/register")} sx={buttonStyles}>Register</Button> */}
+        <Box>
+          <IconButton>
+            <SensorOccupiedIcon sx={{color:"white"}}/>
+          </IconButton>
+          <RegisterButton/>
+        </Box>
 
-        <Button onClick={() => navigate("/login")} sx={buttonStyles}>New Login</Button>
-        <Button onClick={() => navigate("/register")} sx={buttonStyles}>Register</Button>
-        <IconButton>
-          <LoginIcon sx={{color:"white"}}/>
-        </IconButton>
-        <LoginButton/>
+        <Box sx={{px:3}}>
+          <IconButton>
+            <LoginIcon sx={{color:"white"}}/>
+          </IconButton>
+          <LoginButton/>
+        </Box>
+
+
+
+        
       </Toolbar>
       <Toolbar
         component="nav"

@@ -1,43 +1,28 @@
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import LoadingPage from "./LoadingPage";
+
+//Auth
+import { AuthContext } from './AuthContext';
 
 function CheckUserDataAndRoute() {
-    const navigate = useNavigate();
-
-    const {
-        isLoading,
-        isAuthenticated,
-        error,
-        user,
-        getAccessTokenSilently,
-      } = useAuth0();
+      const navigate = useNavigate();
 
       const [userData, setUserData] = useState(null);
       const [fetchingData, setFetchingData] = useState(false);
-
+      const { token, loading, email } = useContext(AuthContext);
       useEffect( () => {
         async function getUserData() {
           try {
-          const accessToken = await getAccessTokenSilently({
-            authorizationParams: {
-              audience: `https://${import.meta.env.VITE_AUTH_DOMAIN_URL}/api/v2/`,
-            },
-          });
-
           var options = {
             method: 'GET',
-                url: `${import.meta.env.VITE_API_BASE_URL}/user/getUser?email=${user.email}`,
-            headers: {authorization: `Bearer ${accessToken}`,
-            audience: `https://first-hire-api.com`}
+                url: `${import.meta.env.VITE_API_BASE_URL}/user/getUser?email=${email}`,
             };
             
           const response = await axios.request(options)
-          console.log("response is")
-          console.log(response)
           let keyPhrases = response.data.keywordSettings.jobPhrases;
           let selectedCompanies = response.data.keywordSettings.selectedCompanies;
           if (keyPhrases == undefined || keyPhrases.length == 0 || selectedCompanies == undefined || selectedCompanies.length == 0 || response.data=="" ) {
@@ -54,17 +39,26 @@ function CheckUserDataAndRoute() {
           }
         }
       }
-      getUserData();
-    },[isLoading]
+      if (!email) {
+        console.log("loading...")        
+      } else {
+          getUserData();
+      }
+
+    },[email]
     )
 
-    if (!isAuthenticated) {
-      return <CircularProgress />
+
+    if (loading) {
+      if (token == null || undefined) {
+        console.log("Login token not found")
+        navigate("/")
+      }
+      return ((
+        <LoadingPage/>
+      ))
     }
 
-    return (isAuthenticated && (
-      <div>Authenticated</div>
-    ))
 }
 
 export default CheckUserDataAndRoute;

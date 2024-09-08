@@ -12,12 +12,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Trying to get a response")
       const response = await axios.post("/api/auth/login", {
         username,
         password,
       });
-      console.log("I should not be prpinted");
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");

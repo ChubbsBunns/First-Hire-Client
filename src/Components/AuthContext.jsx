@@ -4,19 +4,20 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [email, setEmail] = useState(null);
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    console.log("I am reading inside authcontext")
     const storedToken = localStorage.getItem("token");
+    const storedEmail = localStorage.getItem("email");
     setToken(storedToken);
-    console.log("The token has been set to " + storedToken)
+    setEmail(storedEmail);
     setLoading(false); 
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, loading }}>
-      {children}
+    <AuthContext.Provider value={{ token, setToken, loading, email, setEmail }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

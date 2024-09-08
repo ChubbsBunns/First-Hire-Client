@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
-import ResponsiveAppBar from "./AppBar";
+import ResponsiveAppBar from "./Elements/AppBar";
+import LoadingPage from "./LoadingPage";
 
 function Home() {
   const [keywords, setKeywords] = useState();
@@ -12,7 +12,6 @@ function Home() {
   const navigate = useNavigate();
 
   const [selectedCompanies, setSelectedCompanies] = useState([]);
-  //const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
   const handleCheckboxChange = (event) => {
     const newSelectedCompanies = [...selectedCompanies];
@@ -24,14 +23,6 @@ function Home() {
     }
     setSelectedCompanies(newSelectedCompanies);
   };
-
-  const {
-    isLoading,
-    isAuthenticated,
-    error,
-    user,
-    getAccessTokenSilently,
-  } = useAuth0();
 
   const createDailyJobObject = async (e) => {
         e.preventDefault();
@@ -118,7 +109,7 @@ useEffect(() => {
   
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingPage/>;
   }
   if (error) {
     return <div>Oops... {error.message}</div>;
