@@ -74,38 +74,6 @@ function Home() {
       console.error("Error submitting form:", error.message);
     }
   };
-
-  
-useEffect(() => {
-  const getUserMetadata = async () => {
-  const domain = import.meta.env.VITE_AUTH_DOMAIN_URL;  
-    try {
-      const accessToken = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: `https://${domain}/api/v2/`,
-        },
-      });
-      var options = {
-        method: 'GET',
-         url: `${import.meta.env.VITE_API_BASE_URL}/api/private`,
-        headers: {authorization: `Bearer ${accessToken}`,
-        audience: `https://first-hire-api.com`}
-      };
-      axios.request(options).then(function (response) {
-      }).catch(function (error) {
-        console.error(error);
-      });
-      const { user_metadata } = await jobSearchThingy.data.json();
-//      const { user_metadata } = await metadataResponse.json();
-
-      setUserMetadata(user_metadata);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  getUserMetadata();
-}, [getAccessTokenSilently, user?.sub]);
   
 
   if (isLoading) {
