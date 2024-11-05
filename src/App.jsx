@@ -11,6 +11,9 @@ import RegistrationPage  from "./Components/RegistrationPage";
 import { AuthProvider } from "./Components/AuthContext"
 import LoadingPage from "./Components/LoadingPage";
 import UserTest from "./Components/UserTest";
+import LandingPage2 from "./Components/LandingPage2";
+
+import './index.css';
 
 function App() {
   return (
@@ -18,12 +21,13 @@ function App() {
         <AuthProvider>
           <Routes>
           <Route path="/" element={<LandingPage/>}></Route>
+            <Route path="/landingpageTest" element={<LandingPage2/>}></Route>
             <Route path="/login" element={<LoginPage/>}></Route>
             <Route path="/register" element={<RegistrationPage/>}></Route>
             <Route path="/jobSearchParameters" element={<JobSearchParameterSettingsPage2 />}></Route>
             <Route path="/checkUserSettings" element={<CheckUserDataAndRoute />}></Route>
             
-            <Route path="userStuffTest" element={<UserTest/>}></Route>
+            <Route path="/userStuffTest" element={<UserTest/>}></Route>
             
             <Route path="/jobSearchPage" element={<GlobalJobSearchPage />}></Route>
             <Route path="/currentMatchingJobsData" element={<CurrentMatchingJobsPage2/>}></Route>

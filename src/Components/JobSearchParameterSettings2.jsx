@@ -150,7 +150,7 @@ function JobSearchParameterSettingsPage2() {
         console.log("Return loading page")
         return <LoadingPage/>
     } else {
-        if (token) {
+        if (/* token */ true) {
             return (
                 <Box>
                     <Box id="page-header-head" style={{fontFamily: "open sans,helvetica,arial,sans-serif",  zIndex: 0, background:"#d3d3d3", minHeight: "100vh", position: "relative"}}>

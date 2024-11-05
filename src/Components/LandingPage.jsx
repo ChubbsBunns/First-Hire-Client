@@ -20,6 +20,8 @@ import dotenv from 'dotenv';
 
 import searchParamWebPage from '../../src/assets/firstHireSearchParameterScreenshot.png';
 
+import { ThreeDCardDemo } from './landingPageComponents/test';
+import { StickyScrollRevealDemo } from './landingPageComponents/test2';
 
 function LandingPage() {
     useEffect(() => {
@@ -45,7 +47,8 @@ function LandingPage() {
 
     return (
         <>
-          <CssBaseline id="main" sx={{padding:"0px"}}>
+          <>
+            
             <Container maxWidth="lg" sx={{backgroundColor: "rgb(211, 211, 211)", minHeight: "100vh", minWidth: "100%", fontFamily: "Helvetica, Arial, sans-serif"}}>
                 <LandingPageHeader title="First Hire" sections={sections}/>
                 <Divider sx={{backgroundColor: "black"}}/>
@@ -85,6 +88,8 @@ function LandingPage() {
                   <Box>
                     <strong>1)</strong> First you click the "Sign up/Login" button on the top right of this page 
                     and create an account.
+                    <ThreeDCardDemo/>
+                    {/* <StickyScrollRevealDemo/> */}
                     <br/>
                     <strong>2)</strong> You should be greeted with the following web page if you have newly signed up:
                     <br/>
@@ -235,7 +240,7 @@ function LandingPage() {
 
                 <Divider sx={{backgroundColor: "black"}}/>
             </Container>
-          </CssBaseline>
+          </>
         </>
     )
 }
