@@ -20,8 +20,8 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-          <Route path="/" element={<LandingPage/>}></Route>
-            <Route path="/landingpageTest" element={<LandingPage2/>}></Route>
+          <Route path="/" element={<LandingPage2/>}></Route>
+            <Route path="/landingpageOld" element={<LandingPage/>}></Route>
             <Route path="/login" element={<LoginPage/>}></Route>
             <Route path="/register" element={<RegistrationPage/>}></Route>
             <Route path="/jobSearchParameters" element={<JobSearchParameterSettingsPage2 />}></Route>
