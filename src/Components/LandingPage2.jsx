@@ -20,6 +20,11 @@ function LandingPage2() {
       <FloatingNav navItems={navItems}/>
       <div className='h-auto'>
         <LandingPageHeader/>
+        <div class="flex items-center justify-center h-screen bg-blue-100">
+            <div class="bg-red-500 text-white font-bold p-4 rounded">
+                Tailwind CSS is working
+            </div>
+        </div>
         <div className="relative z-20 shadow-lg">
           <StickyScrollRevealDemo />
         </div>
