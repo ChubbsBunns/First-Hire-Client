@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 import registerImage from '../assets/registerFirstHireImage.jpg'
 import registerImage2 from '../assets/registerImage2.jpg'
-import registerImage3 from '../assets/registerImge3.png'
+import registerImage3 from '../assets/registerImage3.png'
 
 function Copyright(props) {
     return (

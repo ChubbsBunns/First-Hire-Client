@@ -157,8 +157,8 @@ function WhatWeSolveComponent() {
 
       ];
       return (
-        <div className="w-full p-5">
-        <div className="flex justify-center align-middle p-5 text-lg md:text-5xl pb-5 font-semibold text-custom-teal" id="explanation">
+        <div className="relative w-full p-5">
+        <div className="relative flex justify-center align-middle text-center p-5 text-3xl md:text-5xl pb-5 font-semibold text-custom-teal" id="explanation">
             Why First Hire?
         </div>
           <Timeline data={data} />

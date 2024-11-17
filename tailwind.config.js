@@ -7,10 +7,19 @@ const {
 const plugin = require('tailwindcss/plugin');
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         'custom-teal': '#052f38',
+        'custom-turqoise': '#00ffff',
+        'custom-lightblue': '#0acdff',
+        'custom-blue': '#0000ff',
+        'custom-dark-blue': '#001052',
+        'custom-green': '#64ff64',
+        'custom-lightest-blue': '#64ffff',
+
+        'custom-core-background': '#f2f4f7',
       },
       animation: {
         first: "moveVertical 30s ease infinite",

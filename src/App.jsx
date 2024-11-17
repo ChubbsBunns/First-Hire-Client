@@ -14,6 +14,7 @@ import UserTest from "./Components/UserTest";
 import LandingPage2 from "./Components/LandingPage2";
 
 import './index.css';
+import CoreWrapper from "./Components/CoreWrapper";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
             <Route path="/register" element={<RegistrationPage/>}></Route>
             <Route path="/jobSearchParameters" element={<JobSearchParameterSettingsPage2 />}></Route>
             <Route path="/checkUserSettings" element={<CheckUserDataAndRoute />}></Route>
+
+            <Route path="/testTemplate" element={<CoreWrapper/>}></Route>
             
             <Route path="/userStuffTest" element={<UserTest/>}></Route>
             

@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from "framer-motion";
 import { ThreeDCardDemo } from './landingPageComponents/test';
 import { StickyScrollRevealDemo } from './landingPageComponents/test2';
-import { TracingBeamDemo } from './landingPageComponents/test3';
+import { HowToSignUpComponent } from './landingPageComponents/HowToUseFirstHireComponent';
 import AuroraBackground from './ui/aurora-background';
 import { AuroraBackgroundDemo } from './landingPageComponents/test4';
 import { LandingPageHeader } from './landingPageComponents/LandingPageMainHeader';
@@ -20,23 +20,23 @@ function LandingPage2() {
       <FloatingNav navItems={navItems}/>
       <div className='h-auto'>
         <LandingPageHeader/>
-        <div class="flex items-center justify-center h-screen bg-blue-100">
-            <div class="bg-red-500 text-white font-bold p-4 rounded">
-                Tailwind CSS is working
-            </div>
-        </div>
+
         <div className="relative z-20 shadow-lg">
-          <StickyScrollRevealDemo />
-        </div>
+        <HowToSignUpComponent/>
+        <br/>          
+        <Divider sx={{ bgcolor: "secondary.light" }}/>
+        <br/>          
         <WhatWeSolveComponent/>
 
-        <Divider/>
+        <Divider sx={{ bgcolor: "secondary.light" }}/>
 
         <FAQComponent/>
 
-        <Divider/>
+        <Divider sx={{ bgcolor: "secondary.light" }}/>
         <Contact/>
-        <br/>
+        <br/>          
+        </div>
+
 
       </div>
 

@@ -12,7 +12,7 @@ export function LandingPageHeader() {
     thirdColor="0, 0, 255"
     fourthColor="0, 255, 255"
     fifthColor="10, 205, 255"
-    pointerColor="0,255,255"
+    pointerColor="0,255,255" 
     >
       <div className="absolute overflow-scroll min-h-screen z-50 flex flex-col md:flex-row items-center justify-center font-bold px-4 pointer-events-none text-3xl md:text-4xl lg:text-7xl" id="about">
         <div className="flex flex-col w-full md:w-1/2 px-4 ">
