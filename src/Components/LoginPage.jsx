@@ -44,7 +44,9 @@ function LoginPage() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
+          console.log("data")
+          console.log(data)
+/*             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
                 email: data.get('email'),
                 password: data.get('password'),
             })
@@ -53,7 +55,7 @@ function LoginPage() {
             console.log(response.data.token)          
             console.log(response.data.email)
             
-            navigate("/user")
+            navigate("/user") */
         } catch (error) {
           console.log(error.response.data)
             console.error(error);
