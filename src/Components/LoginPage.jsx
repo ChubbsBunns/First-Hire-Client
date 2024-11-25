@@ -45,7 +45,7 @@ function LoginPage() {
         const data = new FormData(event.currentTarget);
         try {
           console.log("data")
-          console.log(data)
+          console.log(data.get("email"))
 /*             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
                 email: data.get('email'),
                 password: data.get('password'),

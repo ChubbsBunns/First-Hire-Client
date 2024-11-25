@@ -67,7 +67,7 @@ function GlobalJobSearchPage({ incomingJobData }) {
             return (<>
                 <Container id="jobs-container" sx={{maxWidth: "1140px", marginLeft: "auto", marginRight: "auto", pl: "15px", pr: "15px"}}>
                     <Box id="jobs-container-header" sx={{marginTop: "40px"}}>
-                        <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5", color: "#052f38"}}>Search All Companies &nbsp;<SearchIcon fontSize="large"/></Box>
+                        <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Search All Companies &nbsp;<SearchIcon fontSize="large"/></Box>
                         <Box id="jobs-container-header-description"  sx={{ color: "#052f38", fontSize: "17px"  }}>Here are the jobs today that match your parameters</Box>
                     </Box>
                     <Card sx={{ minHeight: "500px",boxShadow: "2", borderRadius: "20px", p: "10px", backgroundColor: "#f9f9f9", mt: "15px", display: "flex", alignItems: "center", flexDirection: "column"}}>
