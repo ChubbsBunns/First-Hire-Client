@@ -46,7 +46,8 @@ function LoginPage() {
         try {
           console.log("data")
           console.log(data.get("email"))
-/*             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
+          console.log(data.get("password"))
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
                 email: data.get('email'),
                 password: data.get('password'),
             })
@@ -55,7 +56,7 @@ function LoginPage() {
             console.log(response.data.token)          
             console.log(response.data.email)
             
-            navigate("/user") */
+            navigate("/user")
         } catch (error) {
           console.log(error.response.data)
             console.error(error);
