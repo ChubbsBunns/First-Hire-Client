@@ -1,6 +1,6 @@
 
 export const buttonStyles = {
-    color: "white",
+    color: "#052f38",
     textTransform: "none",
     flexGrow: 0.3
   };

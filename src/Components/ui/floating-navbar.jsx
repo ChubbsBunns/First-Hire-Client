@@ -7,7 +7,6 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import { cn } from "../../utils/cn";
-import {Link} from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 

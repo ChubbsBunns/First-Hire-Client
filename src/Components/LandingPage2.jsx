@@ -1,10 +1,5 @@
-import React from 'react'
-import { motion } from "framer-motion";
-import { ThreeDCardDemo } from './landingPageComponents/test';
-import { StickyScrollRevealDemo } from './landingPageComponents/test2';
+import React, {useEffect} from 'react'
 import { HowToSignUpComponent } from './landingPageComponents/HowToUseFirstHireComponent';
-import AuroraBackground from './ui/aurora-background';
-import { AuroraBackgroundDemo } from './landingPageComponents/test4';
 import { LandingPageHeader } from './landingPageComponents/LandingPageMainHeader';
 import { FloatingNav } from './ui/floating-navbar';
 import { navItems } from '../data';
@@ -14,6 +9,10 @@ import { Divider } from '@mui/material';
 import Contact from './landingPageComponents/Contact';
 
 function LandingPage2() {
+  useEffect(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('email')
+  }, [])
     return (
       <>
       
@@ -27,7 +26,6 @@ function LandingPage2() {
         <Divider sx={{ bgcolor: "secondary.light" }}/>
         <br/>          
         <WhatWeSolveComponent/>
-
         <Divider sx={{ bgcolor: "secondary.light" }}/>
 
         <FAQComponent/>

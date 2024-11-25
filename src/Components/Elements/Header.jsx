@@ -3,9 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import { buttonStyles } from '../Styles/BarButtonStyle';
-import Card from '@mui/material/Card';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Container } from "@mui/material";
 
 import SearchIcon from '@mui/icons-material/Search';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
@@ -15,20 +12,22 @@ import { useNavigate } from 'react-router-dom';
 
 import LogoutButton from './LogoutButton';
 import firstHireSecondaryLogo from '../../assets/firstHireLogoSecondary.png'
+import firstHirePrimaryLogo from '../../assets/firstHireLogos/firstHireLogoMain.png'
 
-function AppNavBar() {
+
+function AppNavBar({setActiveComponent}) {
     const navigate = useNavigate();
-    return (<Box id ="navigation-bar" sx={{ maxWidth: "1375px",display: "flex", flexDirection: "row", height: "100%", margin: "0 auto", gap: "16px"}}>
+    return (<Box id ="navigation-bar" sx={{ maxWidth: "1375px",display: "flex", flexDirection: "row", height: "100%", width:"100vw", margin: "0 auto"}}>
                 <Box sx={{display: "flex", flexWrap: "wrap", alignContent: "flex-start", flexGrow: 2,p: "auto", m:"auto"}}>
-                    <img style={{maxHeight: "5vh", maxWidth: "3vw"}} alt="logo" src={firstHireSecondaryLogo}></img> <Box sx={{display: "flex", alignItems: "center", justifyContent: "center",}}>&nbsp; First Hire</Box>
+                    <img style={{maxHeight: "5vh", maxWidth: "3vw"}} alt="logo" src={firstHirePrimaryLogo}></img> <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", color: "#052f38"}}>&nbsp; First Hire</Box>
                 </Box>
                 <Box>
-                    <Button onClick={() => navigate("/jobSearchPage")} sx={buttonStyles}><SearchIcon/>&nbsp; Search All Jobs</Button></Box>
+                    <Button onClick={() => setActiveComponent('GlobalJobSearch')} sx={buttonStyles}><SearchIcon/>&nbsp; Search All Jobs</Button></Box>
                 <Box>
-                    <Button onClick={() => navigate("/jobSearchParameters")} sx={buttonStyles}><ContactMailIcon/>&nbsp; Set Job Parameters</Button>
+                    <Button onClick={() => setActiveComponent('JobSearchParams')} sx={buttonStyles}><ContactMailIcon/>&nbsp; Set Job Parameters</Button>
                 </Box>
                 <Box>
-                    <Button onClick={() => navigate("/currentMatchingJobsData")} sx={buttonStyles}><PersonSearchIcon/>&nbsp; Jobs For You</Button>
+                    <Button onClick={() => setActiveComponent('CurrentMatchingJobPage')} sx={buttonStyles}><PersonSearchIcon/>&nbsp; Jobs For You</Button>
                 </Box>
                 <Box>
                     <LogoutButton/>

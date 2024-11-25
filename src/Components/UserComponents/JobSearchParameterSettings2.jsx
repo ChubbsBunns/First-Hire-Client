@@ -13,28 +13,27 @@ import { styled } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 
 //Auth
-import { AuthContext } from './AuthContext';
+import { AuthContext } from '../AuthContext';
 
 //React
 import React, {useEffect, useState, useContext} from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
 //Custom Styles
-import { buttonStyles } from './Styles/BarButtonStyle';
+import { buttonStyles } from '../Styles/BarButtonStyle';
 
 //Other imports
 import axios from "axios";
 
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 
-import AppNavBar from "./Elements/Header";
-import LoadingPage from './LoadingPage';
+import AppNavBar from "../Elements/Header";
+import LoadingPage from '../LoadingPage';
 
-function JobSearchParameterSettingsPage2() {
+function JobSearchParameterSettingsPage2({incomingCompanyOptions}) {
+    const navigate = useNavigate();
 
     const { token, loading, email } = useContext(AuthContext);
-
-    const navigate = useNavigate();
     //UseStates
     const [jobPhrases, setJobPhrases] = useState('');
     const [negativePhrases, setNegativePhrases] = useState('');
@@ -42,20 +41,13 @@ function JobSearchParameterSettingsPage2() {
     const [selectedCompanies, setSelectedCompanies] = useState([]);
     const [companyOptions, setCompanyOptions] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleCompanySelect = (event, companyName) => {
         const isChecked = event.target.checked;
         const newSelectedCompanies = isChecked ? [...selectedCompanies, companyName] : selectedCompanies.filter((i) => i !== companyName);
         setSelectedCompanies(newSelectedCompanies);
     }
-
-    const handleSearchChange = (searchTerm) => {
-        const filteredStuff = companyOptions.filter((item) => 
-            item.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            setFilteredStuff(filteredStuff);
-      };
 
       const BootstrapTooltip = styled(({ className, ...props }) => (
         <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -93,10 +85,28 @@ function JobSearchParameterSettingsPage2() {
         return phrases.filter(phrase => phrase.length > 0);
       }
 
+      useEffect(() => {
+            try {
+                console.log("The company options for this round are ")
+                console.log(incomingCompanyOptions)
+                if (incomingCompanyOptions && incomingCompanyOptions.length > 0) {
+                    console.log("INCOMING COMPANY OPTIONS SET, SETTING DATA")
+                    setCompanyOptions(incomingCompanyOptions);
+                    console.log("THE SET DATA IS " + incomingCompanyOptions)
+                    setFilteredStuff(incomingCompanyOptions);
+                    setIsLoading(false);
+                } else {
+                    console.log("Incoming company options are not set yet.");
+                }
+            } catch(err) {
+                console.error("Unable to set company options")
+                console.error(err)
+            }
+        }, [incomingCompanyOptions])
+
     useEffect(() => {
         const fetchData = (async () => {
             try {
-                
                 if (email != null || undefined) {
                     var options = {
                     method: 'GET',
@@ -109,7 +119,7 @@ function JobSearchParameterSettingsPage2() {
                         // job search parameters not defined yet, redirect to job search parameters page
                         navigate("/jobSearchParameters")
                     }
-                    await getCompanyOptions();
+                    //await getCompanyOptions();
                 } else {
                     console.log("Email is undefined")
                 }
@@ -126,17 +136,11 @@ function JobSearchParameterSettingsPage2() {
             companyName.toLowerCase().includes(searchTerm.toLowerCase())
         )
         setFilteredStuff(filteredStuff)
-    },[searchTerm])
+    },[companyOptions, searchTerm])
 
 
     //CSS Settings
     const isSmallScreen = useMediaQuery('(max-width:768px)');
-    const companyOptionSX = {
-        display: 'flex',
-        flexGrow: 1,
-        ml: '2%',
-        width: '50%',
-    }
 
     const companyOptionHolder = {
         display: 'grid',
@@ -146,22 +150,18 @@ function JobSearchParameterSettingsPage2() {
         overflow: "auto"
     }
 
-    if (loading) {
-        console.log("Return loading page")
+    if (isLoading || companyOptions.length === 0) {
+        console.log("Loading or companyOptions is None")
         return <LoadingPage/>
     } else {
+        console.log("companyOptions is " + companyOptions)
         if (/* token */ true) {
+            console.log("Rendering the page")
             return (
-                <Box>
-                    <Box id="page-header-head" style={{fontFamily: "open sans,helvetica,arial,sans-serif",  zIndex: 0, background:"#d3d3d3", minHeight: "100vh", position: "relative"}}>
-                        <Container id="page-header-background" sx={{  backgroundColor: "#/* c1d5e3 */", color: "white", width: "100%", margin: "0", minWidth:"100%", maxHeight: "10vh", boxShadow: 1}}>
-                            <AppNavBar/>
-                        </Container>
-                        <Container id ="hero-background" sx={{ backgroundColor: "#0c4551", width: "100%", top: "0", height: "380px", minWidth:"100%", zIndex: -1, position: "absolute", boxShadow: 1}}></Container>
-                        <Container id="jobs-container" sx={{maxWidth: "1140px", marginLeft: "auto", marginRight: "auto", pl: "15px", pr: "15px"}}>
+                        <>
                         <Box id="jobs-container-header" sx={{marginTop: "40px"}}>
-                        <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Set Your Job Parameters Here &nbsp; <ContactMailIcon fontSize="large"/></Box>
-                        <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>The jobs emailed to you will depend on the parameters set here. Please select the phrases you wish your job titles to include, alongside the companies you wish to keep track of</Box>
+                        <Box id="jobs-container-header-title" sx={{color: "#052f38", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Set Your Job Parameters Here &nbsp; <ContactMailIcon fontSize="large"/></Box>
+                        <Box id="jobs-container-header-description"  sx={{ color: "#052f38", fontSize: "17px" }}>The jobs emailed to you will depend on the parameters set here. Please select the phrases you wish your job titles to include, alongside the companies you wish to keep track of</Box>
                         <Card sx={{ minHeight: "500px",boxShadow: "2", borderRadius: "20px", p: "10px", backgroundColor: "#f9f9f9", mt: "15px", display: "flex", alignItems: "center", flexDirection: "column"}}>
                         <FormControl
                             sx={{
@@ -171,7 +171,7 @@ function JobSearchParameterSettingsPage2() {
                                     textDecoration: 'none',
                                 }}>
                             <Box>
-                                <FormLabel>Enter Job Phrases to filter for (seperated by commas) &nbsp;</FormLabel>
+                                <FormLabel sx={{color: "#052f38"}}>Enter Job Phrases to filter for (seperated by commas) &nbsp;</FormLabel>
                                 <BootstrapTooltip title="New Jobs (from the companies you select) that contain these phrases will be emailed to you within 24 hours of being posted">
                                     <InfoIcon/>
                                 </BootstrapTooltip>
@@ -187,7 +187,7 @@ function JobSearchParameterSettingsPage2() {
                             <br/>
         
                             <Box>
-                                <FormLabel>Enter *NEGATIVE* Job Phrases to filter for (seperated by commas) &nbsp;</FormLabel>
+                                <FormLabel sx={{color: "#052f38"}}>Enter *NEGATIVE* Job Phrases to filter for (seperated by commas) &nbsp;</FormLabel>
                                 <BootstrapTooltip title="Jobs that DO include these phrases will NOT be emailed to you">
                                     <InfoIcon/>
                                 </BootstrapTooltip>
@@ -204,7 +204,7 @@ function JobSearchParameterSettingsPage2() {
                             <br/>
         
                             <Box>
-                                <FormLabel>Select the Companies whose jobs you wish to keep track of &nbsp;</FormLabel>
+                                <FormLabel sx={{color: "#052f38"}}>Select the Companies whose jobs you wish to keep track of &nbsp;</FormLabel>
                                 <BootstrapTooltip title="The job notifications you receive will only come from the companies selected here">
                                     <InfoIcon/>
                                 </BootstrapTooltip>
@@ -254,14 +254,29 @@ function JobSearchParameterSettingsPage2() {
                                 method: 'POST',
                                     url: `${import.meta.env.VITE_API_BASE_URL}/user/updateJobParameters`,
                                 data: formData
-                                //How do i insert formData
                                 };
                                 const response = await axios.request(options);
                                 navigate("/currentMatchingJobsData")
                             } catch(error) {
                                 console.error(error)
                             }
-                            // Use formData here, e.g., send it to your backend using fetch or axios
+                            }} variant="outlined"
+                            sx={{
+                                border: "2px solid #1976d2", // Custom border with primary color
+                                color: "#1976d2", // Text color to match border
+                                fontWeight: "bold", // Bold text for professionalism
+                                padding: "10px 20px", // Add padding for a professional feel
+                                borderRadius: "8px", // Rounded corners for a modern look
+                                textTransform: "none", // Disable uppercase for a cleaner look
+                                transition: "all 0.3s ease", // Smooth hover transition
+                                minHeight: "32px", // Ensures a consistent slim height
+                                minWidth: "80px", // Restricts button's width to a smaller size
+                                maxWidth: "120px", // Prevents button from expanding too much
+                                "&:hover": {
+                                    backgroundColor: "#1976d2", // Primary color on hover
+                                    color: "#fff", // White text on hover
+                                    borderColor: "#1976d2", // Maintain border color
+                                },
                             }}>
                             Submit
                             </Button>
@@ -269,10 +284,8 @@ function JobSearchParameterSettingsPage2() {
                         </FormControl>
                         </Card>
                     </Box>
-                        </Container>
-        
-                    </Box>
-                </Box>
+                    </>
+
             )            
         } else {
             console.log("Token not found")

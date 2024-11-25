@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedEmail = localStorage.getItem("email");
+    console.log("Stored email is " + storedEmail)
+    console.log("Stored token is " + storedToken)
     setToken(storedToken);
     setEmail(storedEmail);
     setLoading(false); 
