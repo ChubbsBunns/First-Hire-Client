@@ -38,7 +38,7 @@ function CurrentMatchingJobsPage2() {
         /* headers: {authorization: `Bearer ${accessToken}`} */
         };
 
-        const latestDate = await axios.request(options);
+        let latestDate = await axios.request(options);
         return latestDate.data.toString();
     }
 
@@ -98,10 +98,10 @@ function CurrentMatchingJobsPage2() {
       async function getUserMetaDataAndUpdateVariables() {
         try {
             var userMatchingJobData = await getUserMatchingJobData();
-            var latestDate = await getLatestJobSearchQueryDate();
+            /* var latestDate = await getLatestJobSearchQueryDate(); */
             setUserMatchingJobData(userMatchingJobData);
             setFilteredData(userMatchingJobData)
-            setLatestJobDate(latestDate)
+            /* setLatestJobDate(latestDate) */
         } catch (e) {
             console.log(e)
           }
@@ -131,7 +131,7 @@ function CurrentMatchingJobsPage2() {
                 <Box id="jobs-container-header" sx={{marginTop: "40px"}}>
                     <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Jobs Matching Your Preferences &nbsp; <PersonSearchIcon fontSize="large"/></Box>
                     <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>Here are the jobs today that match your parameters</Box>
-                    <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>These jobs were last updated on {latestJobDate}</Box>
+{/*                     <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>These jobs were last updated on {latestJobDate}</Box> */}
                 </Box>
                 <Card sx={{ minHeight: "500px",boxShadow: "2", borderRadius: "20px", p: "10px", backgroundColor: "#f9f9f9", mt: "15px", display: "flex", alignItems: "center", flexDirection: "column"}}>
                     <Box sx={{flexDirection: "row", mb: "2vh", alignContent: "center", width: "30vw" }}>

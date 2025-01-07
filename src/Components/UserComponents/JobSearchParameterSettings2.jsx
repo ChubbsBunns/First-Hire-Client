@@ -60,20 +60,6 @@ function JobSearchParameterSettingsPage2({incomingCompanyOptions}) {
         },
       }));
 
-    async function getCompanyOptions() {
-
-          var options = {
-            method: 'GET',
-                url: `${import.meta.env.VITE_API_BASE_URL}/companyListNames`,
-            };
-
-        const companyOptionsData = await axios.request(options);
-        companyOptionsData.data.sort();
-        setCompanyOptions(companyOptionsData.data) 
-        setFilteredStuff(companyOptionsData.data);
-    }
-
-
     function extractPhrasesFromString(inputString) {
         // Trim any leading or trailing whitespace from the input string
         inputString = inputString.trim();
@@ -119,7 +105,6 @@ function JobSearchParameterSettingsPage2({incomingCompanyOptions}) {
                         // job search parameters not defined yet, redirect to job search parameters page
                         navigate("/jobSearchParameters")
                     }
-                    //await getCompanyOptions();
                 } else {
                     console.log("Email is undefined")
                 }
