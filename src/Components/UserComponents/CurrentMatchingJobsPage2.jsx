@@ -129,8 +129,8 @@ function CurrentMatchingJobsPage2() {
         return <>
             <Container id="jobs-container" sx={{minWidth: "90vw", marginLeft: "0", marginRight: "0", pl: "15px", pr: "15px"}}>
                 <Box id="jobs-container-header" sx={{marginTop: "40px"}}>
-                    <Box id="jobs-container-header-title" sx={{color: "#E6F8F3", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Jobs Matching Your Preferences &nbsp; <PersonSearchIcon fontSize="large"/></Box>
-                    <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>Here are the jobs today that match your parameters</Box>
+                    <Box id="jobs-container-header-title" sx={{color: "#052f38", fontSize: "32px", fontWeight: "550",  fontFamily: "cambria,arial", mb: ".4rem", lineHeight: "1.5"}}>Jobs Matching Your Preferences &nbsp; <PersonSearchIcon fontSize="large"/></Box>
+                    <Box id="jobs-container-header-description"  sx={{ color: "#052f38", fontSize: "17px" }}>Here are the jobs today that match your parameters</Box>
 {/*                     <Box id="jobs-container-header-description"  sx={{ color: "#ddf7e9", fontSize: "17px" }}>These jobs were last updated on {latestJobDate}</Box> */}
                 </Box>
                 <Card sx={{ minHeight: "500px",boxShadow: "2", borderRadius: "20px", p: "10px", backgroundColor: "#f9f9f9", mt: "15px", display: "flex", alignItems: "center", flexDirection: "column"}}>
