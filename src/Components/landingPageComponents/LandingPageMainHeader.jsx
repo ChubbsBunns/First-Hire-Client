@@ -14,7 +14,8 @@ export function LandingPageHeader() {
     fifthColor="10, 205, 255"
     pointerColor="0,255,255" 
     >
-      <div className="absolute overflow-scroll min-h-screen z-50 flex flex-col md:flex-row items-center justify-center font-bold px-4 pointer-events-none text-3xl md:text-4xl lg:text-7xl" id="about">
+      <div className="absolute overflow-scroll min-h-screen z-50 flex flex-col sm:flex-row items-center justify-center font-bold px-4 pointer-events-none text-3xl sm:text-4xl lg:text-7xl" id="about">
+
         <div className="flex flex-col w-full md:w-1/2 px-4 ">
           <p className="text-center md:mt-5 mt-24 p-5  mx-2 md:mx-7 bg-clip-text text-transparent drop-shadow-4xl bg-gradient-to-b from-slate-900/100 to-gray-700/80 w-full whitespace-normal break-words">
           Latest Job Alerts, Instantly Yours
